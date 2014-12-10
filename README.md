@@ -23,7 +23,7 @@ None
 
 ## Usage
 
-Set up an entry:
+Set an entry:
 
 ```
 lita define foo is something that you want to have defined
