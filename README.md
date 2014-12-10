@@ -1,4 +1,4 @@
-# lita-dig
+# lita-wtf
 
 [![Build Status](https://img.shields.io/travis/esigler/lita-wtf/master.svg)](https://travis-ci.org/esigler/lita-wtf)
 [![MIT License](https://img.shields.io/badge/license-MIT-brightgreen.svg)](https://tldrlegal.com/license/mit-license)
