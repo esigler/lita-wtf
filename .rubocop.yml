@@ -1,0 +1,7 @@
+Documentation:
+  Exclude:
+    - lib/lita/handlers/wtf.rb
+
+FileName:
+  Exclude:
+    - lib/lita-wtf.rb

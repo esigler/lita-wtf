@@ -1,0 +1,14 @@
+en:
+  lita:
+    handlers:
+      wtf:
+        help:
+          wtf:
+            syntax: wtf is <term>?
+            desc: Get the description of <term>
+          define:
+            syntax: define <term> is <defintion>
+            define: Set the description of <term> to <definition>
+        wtf:
+          is: "%{term} is %{definition}"
+          unknown: "I don't know what %{term} is, type: define %{term} is <description> to set it."
