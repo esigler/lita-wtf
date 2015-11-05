@@ -14,6 +14,12 @@ describe Lita::Handlers::Wtf, lita_handler: true do
       expect(replies.last).to eq('web is Rails. Rails. Rails.')
     end
 
+    it 'allows definitions with lots of weird characters' do
+      send_command('define &&--88^%!@#$*() is garbage text')
+      send_command('wtf is &&--88^%!@#$*()')
+      expect(replies.last).to eq('&&--88^%!@#$*() is garbage text')
+    end
+
     it 'responds with the definition of a capitalized service' do
       send_command('define web is Rails. Rails. Rails.')
       send_command('wtf is WEB')

@@ -2,7 +2,7 @@ module Lita
   module Handlers
     class Wtf < Handler
       route(
-        /^wtf(?:\s+is)?\s(?<term>\w+)(?:\?)?/,
+        /^wtf(?:\s+is)?\s(?<term>\S+)(?:\?)?/,
         :lookup,
         command: true,
         help: {
