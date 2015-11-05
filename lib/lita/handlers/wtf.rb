@@ -2,7 +2,7 @@ module Lita
   module Handlers
     class Wtf < Handler
       route(
-        /^wtf(?:\s+is)?\s(?<term>\S+)(?:\?)?/,
+        /^wtf(?:\s+is)?\s(?<term>[^\s@#]+)(?:\?)?/,
         :lookup,
         command: true,
         help: {
@@ -11,7 +11,7 @@ module Lita
       )
 
       route(
-        /^define\s(?<term>\S+)\sis\s(?<definition>.+)$/,
+        /^define\s(?<term>[^\s@#]+)\sis\s(?<definition>[^#@]+)$/,
         :define,
         command: true,
         help: {
