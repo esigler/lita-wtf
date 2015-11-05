@@ -11,7 +11,7 @@ module Lita
       )
 
       route(
-        /^define\s(?<term>\w+)\sis\s(?<definition>.+)$/,
+        /^define\s(?<term>\S+)\sis\s(?<definition>.+)$/,
         :define,
         command: true,
         help: {
