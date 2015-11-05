@@ -6,7 +6,7 @@ en:
           wtf:
             syntax: wtf is <term>?
             desc: Get the description of <term>
-          define:
+          desc:
             syntax: define <term> is <defintion>
             define: Set the description of <term> to <definition>
         wtf:
