@@ -1,8 +1,8 @@
 Gem::Specification.new do |spec|
   spec.name          = 'lita-wtf'
-  spec.version       = '1.0.0'
-  spec.authors       = ['Eric Sigler']
-  spec.email         = ['me@esigler.com']
+  spec.version       = '1.0.1'
+  spec.authors       = ['Eric Sigler', 'Rob Ottaway']
+  spec.email         = ['me@esigler.com', 'rottaway@pagerduty.com']
   spec.description   = 'A user-controlled dictionary plugin for Lita'
   spec.summary       = 'A user-controlled dictionary plugin for Lita'
   spec.homepage      = 'http://github.com/esigler/lita-wtf'
