@@ -5,3 +5,6 @@ Documentation:
 FileName:
   Exclude:
     - lib/lita-wtf.rb
+
+LineLength:
+  Max: 90

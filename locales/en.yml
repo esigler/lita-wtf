@@ -11,5 +11,5 @@ en:
             desc: Set the description of <term> to <definition>
         wtf:
           is: "%{term} is %{definition}"
-          seealso: "According to %{source}, %{term} is %{definition}.\nTo replace this with our own definition, type: define %{term} is <description>."
+          seealso: "According to %{source}, %{term} is %{definition}\nTo replace this with our own definition, type: define %{term} is <description>."
           unknown: "I don't know what %{term} is, type: define %{term} is <description> to set it."

@@ -1,5 +1,3 @@
-require 'nokogiri'
-
 module Lita
   module Handlers
     class Wtf < Handler
@@ -31,21 +29,15 @@ module Lita
 
       def lookup(response)
         term = response.match_data['term']
-        if known?(term)
-          response.reply(format_definition(term, definition(term)))
-        else
-          config.see_also.each do |source_name|
-            definition = send("lookup_#{source_name}", term)
-            if definition
-              return response.reply(t(
-                                      'wtf.seealso',
-                                      term: term,
-                                      definition: definition,
-                                      source: SOURCE_NAMES[source_name]))
-            end
-          end
-          response.reply(t('wtf.unknown', term: term))
-        end
+        return response.reply(format_definition(term, definition(term))) if known?(term)
+
+        definition, source_name = alternate_definition(term)
+        return response.reply(t('wtf.seealso',
+                                term: term,
+                                definition: definition,
+                                source: SOURCE_NAMES[source_name])) if definition
+
+        response.reply(t('wtf.unknown', term: term))
       end
 
       def define(response)
@@ -74,43 +66,46 @@ module Lita
         redis.hset(term.downcase, 'owner', owner)
       end
 
-      def lookup_merriam(term)
-        api_key = config.api_keys['merriam']
-        response = http.get('http://www.dictionaryapi.com/api/v1/'\
-                            "references/collegiate/xml/#{term}", key: api_key)
-        if response.status == 200
-          doc = Nokogiri::XML(response.body) do |config|
-            config.options = Nokogiri::XML::ParseOptions::STRICT |
-                             Nokogiri::XML::ParseOptions::NONET
-          end
-          format_merriam_entries(doc)
+      def alternate_definition(term)
+        config.see_also.each do |source_name|
+          definition = send("lookup_#{source_name}", term)
+          return definition, source_name if definition
         end
       end
 
-      def format_merriam_entries(nokogiri_dom)
-        entries = nokogiri_dom.css('//entry/@id')
-        unless entries.empty?
-          first_entry_key = entries[0].value
-          defs = nokogiri_dom.css("//entry[@id=\"#{first_entry_key}\"]/def/dt")
-          defs.inject('') do |str, definition|
-            str << "\n - " << definition.text[1..-1]
-          end
+      def lookup_merriam(term)
+        api_key = config.api_keys['merriam']
+        # FIXME: Add timeouts.
+        format_merriam_entries(http.get('http://www.dictionaryapi.com/api/v1/'\
+                                        "references/collegiate/xml/#{term}",
+                                        key: api_key))
+      rescue StandardError
+        return nil
+      end
+
+      def format_merriam_entries(content)
+        nokogiri_dom = Nokogiri::XML(content) do |config|
+          config.options = Nokogiri::XML::ParseOptions::STRICT |
+                           Nokogiri::XML::ParseOptions::NONET
         end
+
+        entries = nokogiri_dom.css('//entry/@id')
+        first_entry_key = entries[0].value
+        defs = nokogiri_dom.css("//entry[@id=\"#{first_entry_key}\"]/def/dt")
+        defs.inject('') { |a, e| a << "\n - " << e.text[1..-1] }
       end
 
       def lookup_urbandictionary(term)
+        # FIXME: Add timeouts.
         response = http.get('http://api.urbandictionary.com/v0/define',
                             term: term)
-        if response.status == 200
-          def_list = JSON.parse(response.body)['list']
 
-          if def_list && !def_list.empty?
-            def_text = def_list[0]['definition']
-            # uncapitalize the first letter
-            def_text = def_text[0].downcase + def_text[1..-1]
-            def_text.gsub("\r\n\r\n", "\r\n") # remove empty lines
-          end
-        end
+        def_list = JSON.parse(response.body)['list']
+        def_text = def_list[0]['definition'].strip
+        def_text[0] = def_text[0].chr.downcase
+        def_text
+      rescue StandardError
+        return nil
       end
     end
 

@@ -19,7 +19,14 @@ gem "lita-wtf"
 
 ## Configuration
 
-None
+Optionally, you can add 'See Also' handlers
+
+```
+lita.config.wtf.see_also = ['merriam', 'urbandictionary']
+lita.config.wtf.api_keys = {
+  'merriam': 'abc123'
+}
+```
 
 ## Usage
 
@@ -37,6 +44,9 @@ lita wtf is foo
 > foo is something that you want to have defined
 ```
 
-## License
+Optionally, get 'See Also' recommendations:
 
-[MIT](http://opensource.org/licenses/MIT)
+```
+lita wtf is foo
+> 
+```
