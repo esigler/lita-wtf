@@ -9,6 +9,7 @@ describe Lita::Handlers::Wtf, lita_handler: true do
     before do
       robot.config.handlers.wtf.see_also = []
       send_command('define web is Rails. Rails. Rails.')
+      send_command('define &&--88^%!$*() is garbage text')
     end
 
     it 'responds with the definition of the service' do
@@ -19,6 +20,11 @@ describe Lita::Handlers::Wtf, lita_handler: true do
     it 'responds with the definition of a capitalized service' do
       send_command('wtf is WEB')
       expect(replies.last).to eq('WEB is Rails. Rails. Rails.')
+    end
+
+    it 'allows definitions with lots of weird characters' do
+      send_command('wtf is &&--88^%!$*()')
+      expect(replies.last).to eq('&&--88^%!$*() is garbage text')
     end
 
     it 'responds with an error if there is no such service' do
@@ -43,6 +49,18 @@ describe Lita::Handlers::Wtf, lita_handler: true do
                                  'The origin of such word is described in detail in ' \
                                  "[RFC] 3092.\nTo replace this with our own " \
                                  'definition, type: define foo is <description>.')
+    end
+  end
+
+  describe 'with merriam enabled' do
+    before do
+      # NOTE: It'd be nice to stub out the response from UD, since we don't
+      #       want to hit their API every time we run a test.
+      robot.config.handlers.wtf.see_also = ['urbandictionary']
+    end
+
+    xit 'responds with see also text' do
+      send_command('wtf is foo')
     end
   end
 end
