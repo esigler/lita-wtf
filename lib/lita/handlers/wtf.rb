@@ -82,7 +82,7 @@ module Lita
                             "references/collegiate/xml/#{term}",
                             key: api_key)
 
-        fail unless response.status == 200
+        raise unless response.status == 200
 
         format_merriam_entries(response.body)
       rescue StandardError
