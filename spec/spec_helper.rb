@@ -6,7 +6,11 @@ SimpleCov.formatter = SimpleCov::Formatter::MultiFormatter[
 ]
 SimpleCov.start { add_filter '/spec/' }
 
+require 'dotenv'
+Dotenv.load
+
 require 'lita-wtf'
+
 require 'lita/rspec'
 
 Lita.version_3_compatibility_mode = false
@@ -26,4 +30,10 @@ RSpec.configure do |config|
   config.order = :random
 
   Kernel.srand config.seed
+end
+
+def grab_request(method, status, body)
+  response = double('Faraday::Response', status: status, body: body)
+  allow_any_instance_of(Faraday::Connection).to receive(method.to_sym)
+    .and_return(response)
 end

@@ -48,5 +48,13 @@ Optionally, get 'See Also' recommendations:
 
 ```
 lita wtf is foo
-> 
+> According to Merriam-Webster Collegiate Dictionary,
+> foo is a mythical lion-dog used as a decorative motif
+> in Far Eastern art
+> To replace this with our own definition, type: define foo is <description>.
 ```
+
+## Development
+
+This project uses dotenv to load sensitive variables for development.  Create
+a .env file in your local copy with "MERRIAM_KEY=<whatever key you use>"

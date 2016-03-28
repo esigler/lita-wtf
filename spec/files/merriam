@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<entry_list version="1.0">
+	<entry id="foo dog"><ew>foo dog</ew><subj>MY</subj><hw>foo dog</hw><sound><wav>foo_do01.wav</wav><wpr>!fU-!dog</wpr></sound><vr><vl>or</vl> <va>fu dog</va> <pr>ˈfü-</pr></vr><fl>noun</fl><lb>often capitalized F</lb><et>Chinese (Beijing) <it>fó</it> Buddha; from the use of such figures in ceramic or stone as guardians of Buddhist temples</et><def><date>1953</date><dt>:a mythical lion-dog used as a decorative motif in Far Eastern art</dt></def></entry>
+	<entry id="foo-foo[1]"><hw>foo-foo[1]</hw><fl>teaser entry</fl></entry>
+	<entry id="foo-foo[2]"><hw>foo-foo[2]</hw><fl>teaser entry</fl></entry>
+	<entry id="egg foo yong"><ew>egg foo yong</ew><grp>egg foo</grp><grp>egg yong</grp><grp>foo yong</grp><subj>FD</subj><hw>egg foo yong</hw><sound><wav>eggfo01v.wav</wav><wpr>!eg-!fU-!yuN</wpr></sound><vr><vl>or</vl> <va>egg foo young</va> <vl>or</vl> <va>egg foo yung</va> <pr>-ˈfü-ˈyəŋ</pr></vr><fl>noun</fl><et>Chinese (Guangdong) <it>fuùh yuùhng</it> egg white, egg-coated ingredients, literally, a kind of hibiscus</et><def><date>1917</date><dt>:a fried egg patty containing vegetables (as bean sprouts) and sometimes meat</dt></def></entry>
+	<entry id="fu dog"><ew>fu dog</ew><subj>MY#FA</subj><hw>fu dog</hw><lb>often capitalized F</lb><cx><cl>variant of</cl> <ct>foo dog</ct></cx></entry>
+</entry_list>

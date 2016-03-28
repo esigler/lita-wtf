@@ -71,16 +71,22 @@ module Lita
           definition = send("lookup_#{source_name}", term)
           return definition, source_name if definition
         end
+
+        nil
       end
 
       def lookup_merriam(term)
         api_key = config.api_keys['merriam']
         # FIXME: Add timeouts.
-        format_merriam_entries(http.get('http://www.dictionaryapi.com/api/v1/'\
-                                        "references/collegiate/xml/#{term}",
-                                        key: api_key))
+        response = http.get('http://www.dictionaryapi.com/api/v1/'\
+                            "references/collegiate/xml/#{term}",
+                            key: api_key)
+
+        fail unless response.status == 200
+
+        format_merriam_entries(response.body)
       rescue StandardError
-        return nil
+        nil
       end
 
       def format_merriam_entries(content)
@@ -89,10 +95,9 @@ module Lita
                            Nokogiri::XML::ParseOptions::NONET
         end
 
-        entries = nokogiri_dom.css('//entry/@id')
-        first_entry_key = entries[0].value
-        defs = nokogiri_dom.css("//entry[@id=\"#{first_entry_key}\"]/def/dt")
-        defs.inject('') { |a, e| a << "\n - " << e.text[1..-1] }
+        nokogiri_dom.css('//entry[1]/def/dt/text()').to_s[1..-1]
+      rescue StandardError
+        nil
       end
 
       def lookup_urbandictionary(term)
@@ -105,7 +110,7 @@ module Lita
         def_text[0] = def_text[0].chr.downcase
         def_text
       rescue StandardError
-        return nil
+        nil
       end
     end
 

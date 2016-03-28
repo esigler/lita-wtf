@@ -36,12 +36,11 @@ describe Lita::Handlers::Wtf, lita_handler: true do
 
   describe 'with urbandictionary enabled' do
     before do
-      # NOTE: It'd be nice to stub out the response from UD, since we don't
-      #       want to hit their API every time we run a test.
       robot.config.handlers.wtf.see_also = ['urbandictionary']
     end
 
     it 'responds with see also text' do
+      grab_request('get', 200, File.read('spec/files/urban'))
       send_command('wtf is foo')
       expect(replies).to include('According to UrbanDictionary, foo is an term used ' \
                                  'for unimportant variables in programming when the ' \
@@ -50,17 +49,49 @@ describe Lita::Handlers::Wtf, lita_handler: true do
                                  "[RFC] 3092.\nTo replace this with our own " \
                                  'definition, type: define foo is <description>.')
     end
+
+    it 'responds with just the define statement if there is nothing to look up' do
+      grab_request('get', 200, '') # Yes, the API returns a 200 on not found. Sigh.
+      send_command('wtf is asdkjfal')
+      expect(replies.last).to eq('I don\'t know what asdkjfal is, ' \
+                                 'type: define asdkjfal is <description> to set it.')
+    end
   end
 
   describe 'with merriam enabled' do
     before do
-      # NOTE: It'd be nice to stub out the response from UD, since we don't
-      #       want to hit their API every time we run a test.
-      robot.config.handlers.wtf.see_also = ['urbandictionary']
+      robot.config.handlers.wtf.see_also = ['merriam']
+      robot.config.handlers.wtf.api_keys['merriam'] = ENV['MERRIAM_KEY']
     end
 
-    xit 'responds with see also text' do
+    it 'responds with see also text' do
+      grab_request('get', 200, File.read('spec/files/merriam'))
       send_command('wtf is foo')
+      expect(replies).to include('According to Merriam-Webster Collegiate Dictionary, ' \
+                                 'foo is a mythical lion-dog used as a decorative ' \
+                                 "motif in Far Eastern art\nTo replace this with our " \
+                                 'own definition, type: define foo is <description>.')
+    end
+
+    it 'responds with just the define statement if there is nothing to look up' do
+      grab_request('get', 200, '') # Yes, the API returns a 200 on not found. Sigh.
+      send_command('wtf is asdkjfal')
+      expect(replies.last).to eq('I don\'t know what asdkjfal is, ' \
+                                 'type: define asdkjfal is <description> to set it.')
+    end
+
+    it 'responds with just the define statement if there is a fetch error' do
+      grab_request('get', 500, nil)
+      send_command('wtf is asdkjfal')
+      expect(replies.last).to eq('I don\'t know what asdkjfal is, ' \
+                                 'type: define asdkjfal is <description> to set it.')
+    end
+
+    it 'responds with just the define statement if there is a parse error' do
+      grab_request('get', 200, 'wha?')
+      send_command('wtf is asdkjfal')
+      expect(replies.last).to eq('I don\'t know what asdkjfal is, ' \
+                                 'type: define asdkjfal is <description> to set it.')
     end
   end
 end
