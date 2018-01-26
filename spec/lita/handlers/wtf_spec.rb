@@ -2,7 +2,11 @@ require 'spec_helper'
 
 describe Lita::Handlers::Wtf, lita_handler: true do
   it { is_expected.to route_command('wtf is foo').to(:lookup) }
+
   it { is_expected.to route_command('wtf foo').to(:lookup) }
+  it { is_expected.to route_command('wtf foo ').to(:lookup) }
+  it { is_expected.to route_command('wtf  foo').to(:lookup) }
+
   it { is_expected.to route_command('define foo is bar').to(:define) }
 
   describe '#lookup' do

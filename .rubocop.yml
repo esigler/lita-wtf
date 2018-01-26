@@ -8,3 +8,7 @@ FileName:
 
 LineLength:
   Max: 90
+
+AllCops:
+  Exclude:
+    - spec/**/*

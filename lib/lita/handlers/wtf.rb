@@ -10,7 +10,7 @@ module Lita
       }.freeze
 
       route(
-        /^wtf(?:\s+is)?\s(?<term>[^\s@#]+)(?:\?)?/,
+        /^wtf(?:\s+is)?\s+(?<term>[^\s@#]+)(?:\?)?/,
         :lookup,
         command: true,
         help: {
@@ -32,10 +32,13 @@ module Lita
         return response.reply(format_definition(term, definition(term))) if known?(term)
 
         definition, source_name = alternate_definition(term)
-        return response.reply(t('wtf.seealso',
-                                term: term,
-                                definition: definition,
-                                source: SOURCE_NAMES[source_name])) if definition
+
+        if definition
+          return response.reply(t('wtf.seealso',
+                                  term: term,
+                                  definition: definition,
+                                  source: SOURCE_NAMES[source_name]))
+        end
 
         response.reply(t('wtf.unknown', term: term))
       end
