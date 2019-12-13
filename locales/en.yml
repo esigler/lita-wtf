@@ -4,7 +4,7 @@ en:
       wtf:
         help:
           wtf:
-            syntax: wtf is <term>
+            syntax: wtf is <term>, what is <term>
             desc: Get the description of <term>
           define:
             syntax: define <term> is <defintion>

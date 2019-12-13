@@ -19,6 +19,15 @@ module Lita
       )
 
       route(
+        /^what(?:\s+is)?\s+(?<term>[^\s@#]+)(?:\?)?/,
+        :lookup,
+        command: true,
+        help: {
+          t('help.wtf.syntax') => t('help.wtf.desc')
+        }
+      )
+
+      route(
         /^define\s(?<term>[^\s@#]+)\sis\s(?<definition>[^#@]+)$/,
         :define,
         command: true,
