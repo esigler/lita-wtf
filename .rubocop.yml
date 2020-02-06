@@ -12,3 +12,5 @@ LineLength:
 AllCops:
   Exclude:
     - spec/**/*
+    - vendor/**/*
+    - bin/**/*

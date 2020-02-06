@@ -1,6 +1,6 @@
 Gem::Specification.new do |spec|
   spec.name          = 'lita-wtf'
-  spec.version       = '1.1.1'
+  spec.version       = '1.2.0'
   spec.authors       = ['Eric Sigler', 'Rob Ottaway', 'Max T']
   spec.email         = ['me@esigler.com', 'rottaway@pagerduty.com', 'github@maxvt.com']
   spec.description   = 'A user-controlled dictionary plugin for Lita'
@@ -22,6 +22,6 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'dotenv'
   spec.add_development_dependency 'rake'
   spec.add_development_dependency 'rspec'
-  spec.add_development_dependency 'rubocop'
+  spec.add_development_dependency 'rubocop', '0.39.0'
   spec.add_development_dependency 'simplecov'
 end
